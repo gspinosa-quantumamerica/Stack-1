@@ -1,0 +1,46 @@
+# Stack 1 — Piloto IA Distribuida
+
+## Idioma
+- Comentarios, docstrings y mensajes al usuario en español.
+- Nombres de variables de negocio en español cuando describen columnas o conceptos del área.
+- Explicar en español qué hace cada cambio relevante e indicar cómo probarlo.
+
+## Seguridad
+- Nunca hardcodear credenciales, tokens API ni rutas con datos personales.
+- Rutas a Excel/CSV en config.py o constantes al inicio del script.
+- No commitear datos de producción ni archivos Excel con información sensible.
+- No pegar contraseñas ni datos personales reales en el chat de Cursor.
+- Usar data/ para archivos locales; no commitear datos reales del área.
+
+## Calidad de código
+- Manejo de errores en funciones que lean archivos, SQLite, PostgreSQL o APIs.
+- Validar columnas y tipos antes de procesar; mensajes claros si falta un archivo o columna.
+- Funciones cortas; separar carga de datos, transformación y visualización.
+- Probar después de cada cambio importante antes de pedir el siguiente.
+
+## Stack permitido (requirements.txt)
+- Python 3.11+
+- pandas, streamlit, plotly, openpyxl
+- sqlite3 (stdlib) para SQLite
+- psycopg2 o sqlalchemy para PostgreSQL solo si IT lo aprueba y provee conexión
+- No agregar librerías nuevas sin consultar IT.
+
+## Estructura del proyecto
+- scripts/: scripts del área (ETL, procesos, utilidades).
+- config.py: rutas, parámetros y constantes del área.
+- data/: datos locales; no commitear archivos reales al repositorio.
+- README y TEMPLATE.md: documentación del proyecto.
+
+## Al generar código
+- Explicar en español qué hace cada cambio relevante.
+- Indicar cómo probar el cambio desde la terminal (`python scripts/nombre.py`).
+
+## Desarrollo asistido
+- El consultor define la lógica de negocio; la IA implementa el código.
+- Revisar el diff (Accept/Reject) antes de aceptar cambios.
+- Si algo falla: pegar el error completo en el chat o usar Fix with AI.
+- Plantilla de corrección: "Probé: [acción]. Esperaba: [X]. Pasó: [Y]. Arreglalo sin agregar features."
+
+## Personalización del área
+- Agregar reglas propias del área al final de este archivo sin eliminar las reglas de IT.
+- Documentar columnas, fuentes de datos y reglas de negocio específicas del área.

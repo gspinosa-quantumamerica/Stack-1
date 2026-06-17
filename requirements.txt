@@ -1,0 +1,11 @@
+# Stack 1 — Piloto IA Distribuida
+# Python 3.11+ requerido
+
+pandas>=2.0.0,<3.0.0
+streamlit>=1.32.0,<2.0.0
+plotly>=5.18.0,<6.0.0
+openpyxl>=3.1.0,<4.0.0
+
+# PostgreSQL — descomentar solo si IT aprueba y provee conexión
+# psycopg2-binary>=2.9.9,<3.0.0
+# sqlalchemy>=2.0.0,<3.0.0

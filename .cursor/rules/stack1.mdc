@@ -1,0 +1,31 @@
+---
+description: Estándares del repositorio Stack 1 — Python, Streamlit, pandas y desarrollo asistido con IA
+alwaysApply: true
+---
+
+# Stack 1 — Piloto IA Distribuida
+
+## Idioma
+- Comentarios, docstrings y mensajes al usuario en español.
+- Variables de negocio en español cuando describen columnas o conceptos del área.
+
+## Seguridad
+- Nunca hardcodear credenciales, tokens API ni rutas con datos personales.
+- Rutas a Excel/CSV en `config.py`.
+- No commitear datos de producción ni archivos Excel sensibles.
+
+## Stack permitido
+- Python 3.11+, pandas, streamlit, plotly, openpyxl
+- sqlite3 (stdlib); PostgreSQL solo con aprobación de IT
+- No agregar librerías sin consultar IT
+
+## Estructura
+- `scripts/` — scripts del área
+- `config.py` — rutas y parámetros
+- `data/` — datos locales (no commitear reales)
+
+## Calidad
+- Validar columnas y tipos antes de procesar
+- Manejo de errores en lectura de archivos y bases de datos
+- Separar carga, transformación y visualización
+- Explicar cambios y cómo probarlos
