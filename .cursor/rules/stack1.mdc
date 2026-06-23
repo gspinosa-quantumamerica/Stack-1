@@ -20,9 +20,60 @@ alwaysApply: true
 - No agregar librerías sin consultar IT
 
 ## Estructura
-- `scripts/` — scripts del área
+- `scripts/` — scripts del área (un archivo por tarea)
+- `scripts/dashboard_datos.py` — lógica compartida de carga y transformación para dashboards
 - `config.py` — rutas y parámetros
 - `data/` — datos locales (no commitear reales)
+- `dashboard_autocontenido/` — HTML de un solo archivo para compartir
+- `dashboard_streamlit/` — app interna con Streamlit
+
+## Dashboards
+
+### Flujo de entrega (obligatorio)
+Cuando el usuario pide un dashboard con instrucciones (gráficos, filtros, KPIs, etc.), **no implementar de inmediato** si no quedó claro el modo de entrega.
+
+**Preguntar una sola vez**, con opciones claras:
+- **App (Streamlit)** — para explorar en el equipo; requiere correr un servidor local.
+- **Archivo exportable (HTML autocontenido)** — un solo `.html` para compartir por mail/Teams; se abre con doble clic, sin Python en la máquina del receptor.
+
+Inferir sin preguntar solo si el pedido es explícito (ej. "como app", "en Streamlit" → app; "para compartir", "un HTML", "sin Python" → archivo exportable).
+
+Tras la respuesta del usuario, seguir el proceso del modo elegido (carpeta, script y comando correspondientes).
+
+### Modos disponibles
+
+| Modo | Descripción | Carpeta | Comando |
+|------|-------------|---------|---------|
+| **App (Streamlit)** | Exploración interna, filtros interactivos, uso recurrente | `dashboard_streamlit/` | `streamlit run dashboard_streamlit/app.py` |
+| **Archivo exportable (HTML autocontenido)** | Compartir por mail/Teams; abrir con doble clic | `dashboard_autocontenido/` | `python scripts/generar_dashboard_autocontenido.py` |
+
+**HTML + JSON** (`dashboard.html` + `data/dashboard_data/`) queda solo para legado o desarrollo con IT; no ofrecerlo en la pregunta inicial salvo que el usuario lo pida explícitamente.
+
+### Reglas por modo
+
+**Archivo exportable (HTML autocontenido)**
+- Datos embebidos en un solo `.html`; el cliente abre con doble clic.
+- No requiere localhost ni Python en la máquina del cliente.
+- Requiere internet para Plotly (CDN) salvo que se embeba la librería.
+- Plantilla: `dashboard_autocontenido/plantilla_dashboard.html` → salida: `dashboard_autocontenido/dashboard.html`.
+- Cambiar Excel: actualizar `RUTA_DATOS_ENTRADA` en `config.py` y regenerar.
+
+**App (Streamlit)**
+- Siempre necesita un servidor corriendo (`localhost:8501` en local).
+- El cliente externo no puede usarlo salvo que IT publique una URL.
+- Leer datos vía `config.py`; reutilizar `scripts/dashboard_datos.py`.
+- Mensajes claros si falta el Excel (`st.error`, no pantalla en blanco).
+
+**HTML + JSON** (legado / desarrollo)
+- `fetch` al JSON falla con `file://`; usar `python -m http.server` o hosting.
+- No usar para compartir con clientes sin infraestructura.
+
+### Convenciones de dashboards
+- Rutas en `config.py`; nunca hardcodear paths al Excel.
+- Lógica de carga, validación y transformación en `scripts/dashboard_datos.py`.
+- Un script por tarea en `scripts/`.
+- Sin login, sin base de datos, una sola pantalla salvo que el usuario pida lo contrario.
+- Al terminar: comando para generar/ejecutar, cómo abrir el resultado, qué validar, y qué correr si cambia el Excel.
 
 ## Calidad
 - Validar columnas y tipos antes de procesar
